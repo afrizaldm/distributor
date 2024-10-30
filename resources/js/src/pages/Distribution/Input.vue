@@ -20,7 +20,7 @@
                 <label for="county">County:</label>
                 <select v-model="formData.country" id="county" required>
                     <option disabled value="">Please select</option>
-                    <option v-for="county in counties" :key="county" :value="county">
+                    <option :selected="formData.country == county" v-for="county in counties" :key="county" :value="county">
                         {{ county }}
                     </option>
                 </select>
@@ -41,12 +41,15 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import { IDistribution } from "@/types";
 import { axios } from "@/modules/axios";
 import router from "@/router";
+import { useRoute } from "vue-router";
 
-const formData = ref<IDistribution>({
+const route = useRoute()
+
+let formData = ref<IDistribution>({
     id: null,
     name: '',
     city: '',
@@ -58,12 +61,24 @@ const formData = ref<IDistribution>({
 const counties = ["County 1", "County 2", "County 3"]
 
 const handleSubmit = async () => {
-    const res = await axios.post('/distributions', formData.value)
 
-    console.log({ date: res.data })
+    if (formData.value.id) {
+        const res = await axios.put('/distributions/'  + formData.value.id, formData.value)
 
-    if(res.data.error) {
-        return
+        console.log({ date: res.data })
+
+        if (res.data.error) {
+            return
+        }
+
+    } else {
+        const res = await axios.post('/distributions', formData.value)
+
+        console.log({ date: res.data })
+
+        if (res.data.error) {
+            return
+        }
     }
 
     clearForm()
@@ -82,6 +97,31 @@ const clearForm = () => {
         email: '',
     }
 };
+
+const init = async () => {
+    const id: any = Number(route.params?.id) ?? null
+
+    console.log(id)
+
+    if(!id) {
+        return
+    }
+
+    const res = await axios.get('/distributions/' + id)
+
+    console.log({ data: res.data.data })
+
+    if (res.data.error) {
+        return
+    }
+
+
+    formData.value = res.data.data
+}
+
+onMounted(() => {
+    init()
+})
 
 </script>
 <style scoped lang="scss">

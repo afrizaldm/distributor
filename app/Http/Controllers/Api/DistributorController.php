@@ -46,11 +46,11 @@ class DistributorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Distributor $distributor)
+    public function show(Distributor $distribution)
     {
         try {
-            if ($distributor) {
-                return response()->json(['data' => $distributor, 'error' => null,], 200);
+            if ($distribution) {
+                return response()->json(['data' => $distribution, 'error' => null,], 200);
             }
 
             return response()->json(['data' => null, 'error' => ['message' => 'Data Not Found.']]);
@@ -62,7 +62,7 @@ class DistributorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Distributor $distributor)
+    public function edit(Distributor $distribution)
     {
         //
     }
@@ -70,10 +70,10 @@ class DistributorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDistributorRequest $request, Distributor $distributor)
+    public function update(UpdateDistributorRequest $request, Distributor $distribution)
     {
         try {
-            $data = $distributor->update($request->all());
+            $data = $distribution->update($request->all());
             return response()->json(['data' => $data, 'error' => null,], 200);
         } catch (\Exception $e) {
             return response()->json(['data' => null, 'error' => [$e, 'message' => $e->getMessage()]]);
@@ -83,10 +83,10 @@ class DistributorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Distributor $distributor)
+    public function destroy(Distributor $distribution)
     {
         try {
-            $data = $distributor->delete();
+            $data = $distribution->delete();
             return response()->json(['data' => $data, 'error' => null,], 200);
         } catch (\Exception $e) {
             return response()->json(['data' => null, 'error' => [$e, 'message' => $e->getMessage()]]);

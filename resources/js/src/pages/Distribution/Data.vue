@@ -12,7 +12,10 @@
             <tbody>
                 <tr v-for="item in data" :key="(item.id as number)">
                     <td>{{ item.name }}</td>
-                    <td>[Edit]</td>
+                    <td>{{ item.city }}</td>
+                    <td>
+                        <button @click="edit(item)">[Edit]</button>
+                    </td>
                 </tr>
             </tbody>
 
@@ -43,6 +46,10 @@ const init = async () => {
 
 const add = () => {
     router.push('/distribution/add')
+}
+
+const edit = (item: IDistribution) => {
+    router.push('/distribution/' + item.id)
 }
 
 onMounted(() => {

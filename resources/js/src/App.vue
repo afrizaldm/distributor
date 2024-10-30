@@ -30,7 +30,7 @@ const menuItems = [
     { id: 2, name: 'Catalog', link: '/catalogue' },
     { id: 3, name: 'Order Status', link: '/order' },
     { id: 3, name: 'Distributor', link: '/distribution' },
-    { id: 4, name: 'Upload', link: '/upload' },
+    { id: 4, name: 'Upload', link: '/upload/add' },
 ]
 
 const to = (item: IMenu) => {
