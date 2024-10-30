@@ -17,13 +17,11 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         try {
-            $uuid = $request->input('uuid') ?? null;
-            $username = $request->input('username') ?? null;
+            $user_id = $request->input('user_id') ?? null;
             $email = $request->input('email') ?? null;
             $password = $request->input('password') ?? null;
-            $pin = $request->input('pin') ?? null;
 
-            $user = User::where(['email' => $email])->first();
+            $user = User::where(['user_id' => $user_id])->first();
 
             if (!$user) {
                 return response()->json(['data' => ['user' => null, 'token' => null], 'error' => ['message' => 'user not found']], 200);
@@ -33,9 +31,7 @@ class AuthController extends Controller
 
                 $token = $user->createToken('user_token')->plainTextToken;
 
-                $staffs = Staff::with('barber', 'role')->where('id_user', $user->id)->get();
-
-                return response()->json(['data' => ['user' => $user, 'token' => $token, 'staffs' => $staffs], 'error' => false], 200);
+                return response()->json(['data' => ['user' => $user, 'token' => $token], 'error' => false], 200);
             }
 
             return response()->json(['data' => ['user' => null, 'token' => null], 'error' => ['message' => 'wrong password']], 200);
@@ -84,39 +80,7 @@ class AuthController extends Controller
 
             $token = $user->createToken('user_token')->plainTextToken;
 
-            $staffs = Staff::with('barber', 'role')->where('id_user', $user->id)->get();
-
-            return response()->json(['data' => ['user' => $user, 'token' => $token, 'staffs' => $staffs], 'error' => false], 200);
-        } catch (Exception $e) {
-            return response()->json(['data' => ['user' => null, 'token' => null], 'error' => [$e, 'message' => $e->getMessage()]], 200);
-        }
-    }
-
-    public function pin(Request $request)
-    {
-        try {
-            $uuid = $request->input('uuid') ?? null;
-            $username = $request->input('username') ?? null;
-            $email = $request->input('email') ?? null;
-            $password = $request->input('password') ?? null;
-            $pin = $request->input('pin') ?? null;
-
-            $user = User::where(['uuid' => $uuid])->first();
-
-            if (!$user) {
-                return response()->json(['data' => ['user' => null, 'token' => null], 'error' => ['message' => 'user not found']], 200);
-            }
-
-            if (MD5($pin) == $user->pin) {
-
-                $token = $user->createToken('user_token')->plainTextToken;
-
-                $staffs = Staff::with('barber', 'role')->where('id_user', $user->id)->get();
-
-                return response()->json(['data' => ['user' => $user, 'token' => $token, 'staffs' => $staffs], 'error' => false], 200);
-            }
-
-            return response()->json(['data' => ['user' => null, 'token' => null], 'error' => ['message' => 'wrong pin']], 200);
+            return response()->json(['data' => ['user' => $user, 'token' => $token], 'error' => false], 200);
         } catch (Exception $e) {
             return response()->json(['data' => ['user' => null, 'token' => null], 'error' => [$e, 'message' => $e->getMessage()]], 200);
         }

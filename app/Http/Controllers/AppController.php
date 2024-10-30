@@ -9,4 +9,8 @@ class AppController extends Controller
     function main() {
         return view('app.main');
     }
+
+    function ping() {
+        return 'pong';
+    }
 }
