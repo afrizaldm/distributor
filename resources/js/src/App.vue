@@ -28,7 +28,7 @@ type IMenu = {
 const menuItems = [
     { id: 1, name: 'Home', link: '/home' },
     { id: 2, name: 'Catalog', link: '/catalogue' },
-    { id: 3, name: 'Order Status', link: '/distribution' },
+    { id: 3, name: 'Order Status', link: '/order' },
     { id: 3, name: 'Distributor', link: '/distribution' },
     { id: 4, name: 'Upload', link: '/upload' },
 ]

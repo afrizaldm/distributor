@@ -9,18 +9,21 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="item in data" :key="item.id">
+            <tr v-for="item in data" :key="(item.id as number)">
                 <td>{{ item.bean }}</td>
                 <td>{{ item.description }}</td>
                 <td>{{ item.price }}</td>
             </tr>
         </tbody>
     </table>
+    
+    <button @click="add">[Add]</button>
 </template>
 <script setup lang="ts">
 import { axios } from "@/modules/axios";
 import { ref, onMounted } from "vue";
 import { ICatalog } from "@/types";
+import router from "@/router";
 
 const data = ref<ICatalog[]>()
 
@@ -34,6 +37,10 @@ const init = async() => {
     }
 
     data.value = res.data.data as ICatalog[]
+}
+
+const add = () => {
+    router.push('/catalogue/add')
 }
 
 onMounted(() => {

@@ -1,7 +1,7 @@
 import { ITimestamps } from "@/types/others/Timestamps";
 
 export type IDistribution = Partial<ITimestamps> & {
-    id: number
+    id: number | null
     bean?: string
     description?: string
     price?: number,
