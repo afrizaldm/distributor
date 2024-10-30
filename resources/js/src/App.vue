@@ -1,5 +1,15 @@
 <template>
 
+    <div class="header">
+        <img class="logo" src="../assets/logo.png" alt="logo">
+        <div class="title">
+            <p class="company">Coffee Valley</p>
+            <p><strong>Teste every love in every cup!</strong></p>
+            <p>One Alewife Center 3rd Floor</p>
+            <p>Cambrige, MA 02140</p>
+        </div>
+    </div>
+
     <ul class="menu">
         <li v-for="item in menuItems" :key="item.id">
             <a class="menu-item" @click="to(item)">{{ item.name }}</a>
@@ -12,12 +22,14 @@
     <RouterView />
 
     <footer>
-        <p>&copy; 2023 Nama Perusahaan. Semua Hak Dilindungi.</p>
+        <p>{{ formattedDate }}</p>
     </footer>
 </template>
 <script setup lang="ts">
+import { computed } from "vue";
 import router from './router';
 
+const currentDate = new Date()
 
 type IMenu = {
     id: number
@@ -36,6 +48,14 @@ const menuItems = [
 const to = (item: IMenu) => {
     router.push(item.link)
 }
+
+const formattedDate = computed(() => {
+    return currentDate.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+    })
+})
 
 </script>
 <style scoped lang="scss">
@@ -67,7 +87,7 @@ body {
     padding: 5px 20px;
     /* Jarak antar item menu */
     color: white;
-    
+
     background-color: brown;
     /* Warna teks */
     text-decoration: none;
@@ -88,5 +108,28 @@ footer {
     /* Warna latar belakang footer */
     margin-top: auto;
     /* Mengatur margin atas untuk footer */
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    /* Vertically centers items */
+}
+
+.logo {
+    width: 100px;
+    /* Sesuaikan ukuran sesuai kebutuhan */
+    height: auto;
+    margin-right: 10px;
+    /* Menambahkan jarak antara logo dan teks */
+}
+
+.title p {
+    margin: 0;
+}
+
+.company {
+    font-size: 2rem;
+    color: brown;
 }
 </style>
