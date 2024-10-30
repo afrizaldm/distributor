@@ -23,5 +23,6 @@ class Distributor extends Model
         'country',
         'phone',
         'email',
+        'status'
     ];
 }

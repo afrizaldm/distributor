@@ -1,5 +1,5 @@
-import { TokenStorage } from "./token";
+import { UserStorage } from "./user";
 
 export {
-    TokenStorage,
+    UserStorage,
 }

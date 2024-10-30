@@ -8,6 +8,7 @@ export type IDistribution = Partial<ITimestamps> & {
     email?: string
     country?: string
     phone?: string
+    status?: string // opened, edited, new
 }
 
 export default IDistribution
